@@ -102,6 +102,7 @@ jobs:
         # =========================
         # 自动生成 merged-binary.bin
         # =========================
+        # assets offset must match partitions/v2/4m.csv
         esptool.py --chip esp32s3 merge_bin \
           -o build/merged-binary.bin \
           --flash_mode dio \
@@ -109,7 +110,7 @@ jobs:
           --flash_size 4MB \
           0x0 build/bootloader/bootloader.bin \
           0x8000 build/partition_table/partition-table.bin \
-          0xd000 build/generated_assets.bin \
+          0x300000 build/generated_assets.bin \
           0x10000 build/xiaozhi.bin
 
         # 验证 merged-binary.bin
