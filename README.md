@@ -24,9 +24,9 @@ MAX98357A    ESP32-S3
 ---------    --------
 VIN    -->   3.3V
 GND    -->   GND
-BCLK   -->   GPIO4
-LRC    -->   GPIO5
-DIN    -->   GPIO6
+BCLK   -->   GPIO15
+LRC    -->   GPIO16
+DIN    -->   GPIO7
 GAIN   -->   不接(默认9dB) 或 GND(12dB)
 SD     -->   不接(默认启用)
 ```
@@ -38,9 +38,9 @@ INMP441      ESP32-S3
 -------      --------
 VDD    -->   3.3V
 GND    -->   GND
-SCK    -->   GPIO7
-WS     -->   GPIO15
-SD     -->   GPIO16
+SCK    -->   GPIO5
+WS     -->   GPIO4
+SD     -->   GPIO6
 L/R    -->   GND (左声道)
 ```
 
@@ -178,16 +178,16 @@ idf.py -p /dev/ttyACM0 monitor
 | GPIO | 功能 | 模块 |
 |------|------|------|
 | 0 | BOOT | 按键 |
-| 4 | BCLK | MAX98357A |
-| 5 | LRC | MAX98357A |
-| 6 | DIN | MAX98357A |
-| 7 | SCK | INMP441 |
+| 4 | WS | INMP441 |
+| 5 | SCK | INMP441 |
+| 6 | SD | INMP441 |
+| 7 | DIN | MAX98357A |
 | 9 | DC | ST7789 |
 | 10 | CS | ST7789 |
 | 11 | MOSI/SDA | ST7789 |
 | 12 | SCLK/SCL | ST7789 |
-| 15 | WS | INMP441 |
-| 16 | SD | INMP441 |
+| 15 | BCLK | MAX98357A |
+| 16 | LRC | MAX98357A |
 | 48 | LED | 板载 LED，视开发板版本而定 |
 
 ## 相关链接
