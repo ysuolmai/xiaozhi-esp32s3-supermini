@@ -98,6 +98,22 @@ jobs:
         idf.py -DBOARD_NAME=${{ matrix.board_name }} -DBOARD_TYPE=esp32s3-supermini build
         # 验证 generated_assets.bin 已生成（包含唤醒词模型）
         ls -la build/generated_assets.bin
+
+        # =========================
+        # 自动生成 merged-binary.bin
+        # =========================
+        esptool.py --chip esp32s3 merge_bin \
+          -o build/merged-binary.bin \
+          --flash_mode dio \
+          --flash_freq 80m \
+          --flash_size 4MB \
+          0x0 build/bootloader/bootloader.bin \
+          0x8000 build/partition_table/partition-table.bin \
+          0xd000 build/generated_assets.bin \
+          0x10000 build/xiaozhi.bin
+
+        # 验证 merged-binary.bin
+        ls -lh build/merged-binary.bin
       timeout-minutes: 60
 
     - name: Upload firmware artifact
@@ -105,6 +121,7 @@ jobs:
       with:
         name: ${{ matrix.artifact_name }}
         path: |
+          xiaozhi-esp32/build/merged-binary.bin
           xiaozhi-esp32/build/xiaozhi.bin
           xiaozhi-esp32/build/generated_assets.bin
           xiaozhi-esp32/build/bootloader/*.bin
