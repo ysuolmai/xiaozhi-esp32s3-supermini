@@ -62,8 +62,8 @@ BLK    -->   3.3V (常亮)
 ### 环境准备
 
 ```bash
-# 1. 安装 ESP-IDF v5.4+
-git clone -b v5.4 --recursive https://github.com/espressif/esp-idf.git
+# 1. 安装 ESP-IDF v5.5.2+
+git clone -b v5.5.2 --recursive https://github.com/espressif/esp-idf.git
 cd esp-idf
 ./install.sh esp32s3
 source export.sh
@@ -73,7 +73,7 @@ git clone --recursive https://github.com/78/xiaozhi-esp32.git
 cd xiaozhi-esp32
 
 # 3. 下载或复制本板卡配置
-git clone https://github.com/dakeqi/xiaozhi-esp32s3-supermini.git board-config
+git clone https://github.com/ysuolmai/xiaozhi-esp32s3-supermini.git board-config
 
 # 4. 复制板卡文件
 mkdir -p main/boards/esp32s3-supermini
