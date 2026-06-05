@@ -11,6 +11,8 @@
 | 麦克风 | INMP441 | I2S数字麦克风 |
 | 屏幕 | ST7789 | 240x240 SPI LCD |
 
+> ESP32-S3FH4R2 的封装内 Flash 是 4MB Quad SPI，封装内 PSRAM 是 2MB Quad SPI。不要按 ESP32-S3R8/R16V 那类 8MB/16MB PSRAM 芯片配置成 Octal/OPI。
+
 ## 接线图
 
 这份配置避开了 ESP32-S3 原生 USB 常用的 GPIO19/GPIO20，也避开了大部分启动绑带脚。不同 ESP32-S3 SuperMini 批次引脚丝印可能略有不同，请以你手上的开发板引脚图为准。

@@ -57,10 +57,17 @@ jobs:
         echo "CONFIG_BOARD_TYPE_ESP32S3_SUPERMINI=y" >> sdkconfig
         echo "CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y" >> sdkconfig
         echo 'CONFIG_ESPTOOLPY_FLASHSIZE="4MB"' >> sdkconfig
+        echo "CONFIG_ESPTOOLPY_FLASHMODE_QIO=y" >> sdkconfig
+        echo 'CONFIG_ESPTOOLPY_FLASHMODE="qio"' >> sdkconfig
+        echo "CONFIG_ESPTOOLPY_FLASH_SAMPLE_MODE_STR=y" >> sdkconfig
+        echo "CONFIG_ESPTOOLPY_FLASHFREQ_80M=y" >> sdkconfig
         echo "CONFIG_PARTITION_TABLE_CUSTOM=y" >> sdkconfig
         echo 'CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions/v2/4m.csv"' >> sdkconfig
-        # 4MB Flash / 2MB PSRAM / 512KB SRAM
+        # ESP32-S3FH4R2: 4MB Quad SPI Flash / 2MB Quad SPI PSRAM / 512KB SRAM
         echo "CONFIG_SPIRAM=y" >> sdkconfig
+        echo "CONFIG_SPIRAM_MODE_QUAD=y" >> sdkconfig
+        echo "CONFIG_SPIRAM_TYPE_AUTO=y" >> sdkconfig
+        echo "CONFIG_SPIRAM_SPEED_80M=y" >> sdkconfig
         echo "CONFIG_SPIRAM_USE_MALLOC=y" >> sdkconfig
         echo "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=16384" >> sdkconfig
         echo "CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL=32768" >> sdkconfig
