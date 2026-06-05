@@ -10,6 +10,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board_name: esp32s3-supermini
+            artifact_name: esp32s3-supermini-nodisplay-firmware
+            display_config: ""
+          - board_name: esp32s3-supermini-st7789
+            artifact_name: esp32s3-supermini-st7789-firmware
+            display_config: "CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY=y"
     
     steps:
     - name: Checkout this repo
@@ -53,7 +63,7 @@ jobs:
         
         # 追加配置到sdkconfig（模仿release.py）
         echo "" >> sdkconfig
-        echo "# Append for ESP32-S3 SuperMini" >> sdkconfig
+        echo "# Append for ${{ matrix.board_name }}" >> sdkconfig
         echo "CONFIG_BOARD_TYPE_ESP32S3_SUPERMINI=y" >> sdkconfig
         echo "CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y" >> sdkconfig
         echo 'CONFIG_ESPTOOLPY_FLASHSIZE="4MB"' >> sdkconfig
@@ -79,10 +89,13 @@ jobs:
         echo "# CONFIG_WAKE_WORD_DISABLED is not set" >> sdkconfig
         echo "CONFIG_USE_ESP_WAKE_WORD=y" >> sdkconfig
         echo "CONFIG_SR_WN_WN9S_NIHAOXIAOZHI=y" >> sdkconfig
+        if [ -n "${{ matrix.display_config }}" ]; then
+          echo "${{ matrix.display_config }}" >> sdkconfig
+        fi
         
         # 重新配置并构建
         idf.py reconfigure
-        idf.py -DBOARD_NAME=esp32s3-supermini -DBOARD_TYPE=esp32s3-supermini build
+        idf.py -DBOARD_NAME=${{ matrix.board_name }} -DBOARD_TYPE=esp32s3-supermini build
         # 验证 generated_assets.bin 已生成（包含唤醒词模型）
         ls -la build/generated_assets.bin
       timeout-minutes: 60
@@ -90,7 +103,7 @@ jobs:
     - name: Upload firmware artifact
       uses: actions/upload-artifact@v4
       with:
-        name: esp32s3-supermini-firmware
+        name: ${{ matrix.artifact_name }}
         path: |
           xiaozhi-esp32/build/xiaozhi.bin
           xiaozhi-esp32/build/generated_assets.bin

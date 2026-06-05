@@ -4,6 +4,7 @@
     "builds": [
         {
             "name": "esp32s3-supermini",
+            "description": "No display",
             "sdkconfig_append": [
                 "CONFIG_IDF_TARGET=\"esp32s3\"",
                 "CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y",
@@ -40,6 +41,48 @@
                 "CONFIG_COMPILER_OPTIMIZATION_SIZE=y",
                 "CONFIG_USE_ESP_WAKE_WORD=y",
                 "CONFIG_SR_WN_WN9S_NIHAOXIAOZHI=y"
+            ]
+        },
+        {
+            "name": "esp32s3-supermini-st7789",
+            "description": "ST7789 240x240 SPI display",
+            "sdkconfig_append": [
+                "CONFIG_IDF_TARGET=\"esp32s3\"",
+                "CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y",
+                "CONFIG_ESPTOOLPY_FLASHMODE_QIO=y",
+                "CONFIG_ESPTOOLPY_FLASHMODE=\"qio\"",
+                "CONFIG_ESPTOOLPY_FLASH_SAMPLE_MODE_STR=y",
+                "CONFIG_ESPTOOLPY_FLASHFREQ_80M=y",
+                "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME=\"partitions/v2/4m.csv\"",
+                "CONFIG_SPIRAM=y",
+                "CONFIG_SPIRAM_MODE_QUAD=y",
+                "CONFIG_SPIRAM_TYPE_AUTO=y",
+                "CONFIG_SPIRAM_SPEED_80M=y",
+                "CONFIG_SPIRAM_USE_MALLOC=y",
+                "CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=16384",
+                "CONFIG_SPIRAM_MALLOC_RESERVE_INTERNAL=32768",
+                "CONFIG_PM_ENABLE=y",
+                "CONFIG_FREERTOS_USE_TICKLESS_IDLE=y",
+                "CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y",
+                "CONFIG_ESP_MAIN_TASK_STACK_SIZE=7168",
+                "CONFIG_FREERTOS_HZ=1000",
+                "CONFIG_FREERTOS_IDLE_TASK_STACKSIZE=1536",
+                "CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=6",
+                "CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=16",
+                "CONFIG_ESP_WIFI_RX_BA_WIN=6",
+                "CONFIG_ESP_WIFI_ENABLE_WPA3_SAE=n",
+                "CONFIG_ESP_WIFI_ESPNOW_MAX_ENCRYPT_NUM=0",
+                "CONFIG_ESP_WIFI_ENTERPRISE_SUPPORT=n",
+                "CONFIG_LWIP_MAX_SOCKETS=10",
+                "CONFIG_LWIP_TCPIP_RECVMBOX_SIZE=16",
+                "CONFIG_LWIP_IPV6=n",
+                "CONFIG_LWIP_TCPIP_TASK_STACK_SIZE=2048",
+                "CONFIG_MBEDTLS_DYNAMIC_FREE_CONFIG_DATA=y",
+                "CONFIG_NEWLIB_NANO_FORMAT=y",
+                "CONFIG_COMPILER_OPTIMIZATION_SIZE=y",
+                "CONFIG_USE_ESP_WAKE_WORD=y",
+                "CONFIG_SR_WN_WN9S_NIHAOXIAOZHI=y",
+                "CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY=y"
             ]
         }
     ]

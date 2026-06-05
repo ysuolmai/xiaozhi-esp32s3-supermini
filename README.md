@@ -9,7 +9,7 @@
 | 主控 | ESP32-S3 SuperMini | 4MB Flash / 2MB PSRAM / 512KB SRAM |
 | 功放 | MAX98357A | I2S数字功放 |
 | 麦克风 | INMP441 | I2S数字麦克风 |
-| 屏幕 | ST7789 | 240x240 SPI LCD |
+| 屏幕 | 可选 | 默认无屏；可编译 ST7789 240x240 SPI LCD 版本 |
 
 > ESP32-S3FH4R2 的封装内 Flash 是 4MB Quad SPI，封装内 PSRAM 是 2MB Quad SPI。不要按 ESP32-S3R8/R16V 那类 8MB/16MB PSRAM 芯片配置成 Octal/OPI。
 
@@ -44,7 +44,11 @@ SD     -->   GPIO6
 L/R    -->   GND (左声道)
 ```
 
-### ST7789 屏幕
+默认版本不使用屏幕，GPIO9/GPIO10/GPIO11/GPIO12 未被 LCD 占用，可按需改作其它外设。
+
+### 可选 ST7789 屏幕
+
+选择 `esp32s3-supermini-st7789` 构建时启用：
 
 ```text
 ST7789       ESP32-S3
@@ -58,6 +62,13 @@ CS     -->   GPIO10
 RST    -->   3.3V (或不接)
 BLK    -->   3.3V (常亮)
 ```
+
+## 固件版本
+
+| 构建名称 | 屏幕 | 说明 |
+|----------|------|------|
+| `esp32s3-supermini` | 无 | 默认版本，使用 `NoDisplay`，节省资源和 GPIO |
+| `esp32s3-supermini-st7789` | ST7789 | 启用 240x240 SPI LCD |
 
 ## 源码编译
 
@@ -96,6 +107,9 @@ idf.py set-target esp32s3
 idf.py menuconfig
 # Xiaozhi Assistant -> Board Type -> ESP32-S3 SuperMini
 
+# 默认构建无屏版本；如需 ST7789，追加：
+# CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY=y
+
 # 编译
 idf.py build
 
@@ -110,8 +124,8 @@ idf.py -p COM3 monitor
 
 ### 首次配网
 
-1. 上电后设备进入配网模式，屏幕显示配网二维码
-2. 微信扫码或使用小智APP配网
+1. 上电后设备进入配网模式
+2. 按串口日志提示或使用小智APP完成配网
 3. 输入WiFi密码完成配网
 
 ### 语音唤醒
@@ -157,17 +171,11 @@ idf.py -p /dev/ttyACM0 monitor
 - 确认 SCK/WS/SD 接线正确
 - 检查 VDD 是否为 3.3V
 
-#### 3. 屏幕不亮/显示异常
-
-- 确认 SPI 接线正确
-- 检查 DC/CS/SCL/SDA 引脚是否与 `config.h` 一致
-- 尝试调整 `DISPLAY_INVERT_COLOR`、`DISPLAY_MIRROR_X`、`DISPLAY_MIRROR_Y`
-
-#### 4. 板载 LED 不亮
+#### 3. 板载 LED 不亮
 
 不同 ESP32-S3 SuperMini 的板载 LED 可能不是普通 GPIO LED，也可能接在 GPIO48 的 RGB LED 上。若不亮，请修改 `config.h` 里的 `BUILTIN_LED_GPIO`，或按上游项目已有 RGB LED 驱动板型改写 `GetLed()`。
 
-#### 5. WiFi连接失败
+#### 4. WiFi连接失败
 
 - 确认WiFi为2.4GHz（不支持5GHz）
 - 检查密码是否正确
@@ -182,13 +190,18 @@ idf.py -p /dev/ttyACM0 monitor
 | 5 | SCK | INMP441 |
 | 6 | SD | INMP441 |
 | 7 | DIN | MAX98357A |
+| 15 | BCLK | MAX98357A |
+| 16 | LRC | MAX98357A |
+| 48 | LED | 板载 LED，视开发板版本而定 |
+
+ST7789 版本额外占用：
+
+| GPIO | 功能 | 模块 |
+|------|------|------|
 | 9 | DC | ST7789 |
 | 10 | CS | ST7789 |
 | 11 | MOSI/SDA | ST7789 |
 | 12 | SCLK/SCL | ST7789 |
-| 15 | BCLK | MAX98357A |
-| 16 | LRC | MAX98357A |
-| 48 | LED | 板载 LED，视开发板版本而定 |
 
 ## 相关链接
 

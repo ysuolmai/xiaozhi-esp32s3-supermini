@@ -5,7 +5,7 @@
 
 // ============================================================
 // ESP32-S3 SuperMini
-// MAX98357A + INMP441 + ST7789
+// MAX98357A + INMP441 + No display
 // 4MB Flash / 2MB PSRAM / 512KB SRAM
 // ============================================================
 
@@ -34,6 +34,7 @@
 // LED (many ESP32-S3 SuperMini boards use GPIO48; change if your board differs)
 #define BUILTIN_LED_GPIO        GPIO_NUM_48
 
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
 // ST7789 LCD Display
 #define DISPLAY_MOSI_PIN        GPIO_NUM_11
 #define DISPLAY_CLK_PIN         GPIO_NUM_12
@@ -52,5 +53,6 @@
 #define DISPLAY_OFFSET_X        0
 #define DISPLAY_OFFSET_Y        0
 #define DISPLAY_SPI_MODE        0
+#endif
 
 #endif // _BOARD_CONFIG_H_

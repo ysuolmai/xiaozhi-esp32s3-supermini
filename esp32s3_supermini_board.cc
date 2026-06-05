@@ -1,16 +1,21 @@
 #include "wifi_board.h"
 #include "codecs/no_audio_codec.h"
+#include "display/display.h"
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
 #include "display/lcd_display.h"
+#endif
 #include "application.h"
 #include "button.h"
 #include "led/single_led.h"
 #include "config.h"
 
 #include <esp_log.h>
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
 #include <esp_lcd_panel_vendor.h>
 #include <esp_lcd_panel_io.h>
 #include <esp_lcd_panel_ops.h>
 #include <driver/spi_common.h>
+#endif
 
 #define TAG "ESP32S3SuperMiniBoard"
 
@@ -20,13 +25,14 @@
  * 硬件配置:
  * - MAX98357A I2S功放
  * - INMP441 I2S麦克风
- * - ST7789 SPI LCD (240x240)
+ * - No display
  * - 4MB Flash / 2MB PSRAM / 512KB SRAM
  * - 单按键交互
  */
 class Esp32S3SuperMiniBoard : public WifiBoard {
 private:
     Button boot_button_;
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
     LcdDisplay* display_ = nullptr;
 
     void InitializeSpi() {
@@ -73,6 +79,7 @@ private:
                                     DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_OFFSET_X, DISPLAY_OFFSET_Y, 
                                     DISPLAY_MIRROR_X, DISPLAY_MIRROR_Y, DISPLAY_SWAP_XY);
     }
+#endif
 
     void InitializeButtons() {
         boot_button_.OnClick([this]() {
@@ -89,8 +96,10 @@ private:
 
 public:
     Esp32S3SuperMiniBoard() : boot_button_(BOOT_BUTTON_GPIO) {
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
         InitializeSpi();
         InitializeLcdDisplay();
+#endif
         InitializeButtons();
     }
 
@@ -100,7 +109,12 @@ public:
     }
 
     virtual Display* GetDisplay() override {
+#ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
         return display_;
+#else
+        static NoDisplay display;
+        return &display;
+#endif
     }
 
     virtual AudioCodec* GetAudioCodec() override {
