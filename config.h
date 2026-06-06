@@ -20,10 +20,10 @@
 #define AUDIO_I2S_MIC_GPIO_SCK   GPIO_NUM_5
 #define AUDIO_I2S_MIC_GPIO_DIN   GPIO_NUM_6
 
-// MAX98357A Speaker (I2S TX), aligned with upstream bread-compact-wifi
+// MAX98357A Speaker (I2S TX), use only ESP32-S3 SuperMini header GPIO 1-13
 #define AUDIO_I2S_SPK_GPIO_DOUT  GPIO_NUM_7
-#define AUDIO_I2S_SPK_GPIO_BCLK  GPIO_NUM_15
-#define AUDIO_I2S_SPK_GPIO_LRCK  GPIO_NUM_16
+#define AUDIO_I2S_SPK_GPIO_BCLK  GPIO_NUM_8
+#define AUDIO_I2S_SPK_GPIO_LRCK  GPIO_NUM_13
 
 // Buttons
 #define BOOT_BUTTON_GPIO        GPIO_NUM_0
@@ -31,7 +31,7 @@
 #define VOLUME_UP_BUTTON_GPIO   GPIO_NUM_NC
 #define VOLUME_DOWN_BUTTON_GPIO GPIO_NUM_NC
 
-// LED (many ESP32-S3 SuperMini boards use GPIO48; change if your board differs)
+// Onboard WS2818/RGB LED DIN. External header GPIOs are limited to GPIO 1-13.
 #define BUILTIN_LED_GPIO        GPIO_NUM_48
 
 #ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY

@@ -24,8 +24,8 @@ MAX98357A    ESP32-S3
 ---------    --------
 VIN    -->   3.3V
 GND    -->   GND
-BCLK   -->   GPIO15
-LRC    -->   GPIO16
+BCLK   -->   GPIO8
+LRC    -->   GPIO13
 DIN    -->   GPIO7
 GAIN   -->   不接(默认9dB) 或 GND(12dB)
 SD     -->   不接(默认启用)
@@ -173,7 +173,7 @@ idf.py -p /dev/ttyACM0 monitor
 
 #### 3. 板载 LED 不亮
 
-不同 ESP32-S3 SuperMini 的板载 LED 可能不是普通 GPIO LED，也可能接在 GPIO48 的 RGB LED 上。若不亮，请修改 `config.h` 里的 `BUILTIN_LED_GPIO`，或按上游项目已有 RGB LED 驱动板型改写 `GetLed()`。
+外接音频和屏幕模块只使用可插针 GPIO1-GPIO13。板载 RGB LED 的 DIN 标注为 GPIO48，不属于两侧可插针；若你的板载 LED 不是普通 GPIO LED，请修改 `config.h` 里的 `BUILTIN_LED_GPIO`，或按上游项目已有 RGB LED 驱动板型改写 `GetLed()`。
 
 #### 4. WiFi连接失败
 
@@ -190,9 +190,9 @@ idf.py -p /dev/ttyACM0 monitor
 | 5 | SCK | INMP441 |
 | 6 | SD | INMP441 |
 | 7 | DIN | MAX98357A |
-| 15 | BCLK | MAX98357A |
-| 16 | LRC | MAX98357A |
-| 48 | LED | 板载 LED，视开发板版本而定 |
+| 8 | BCLK | MAX98357A |
+| 13 | LRC | MAX98357A |
+| 48 | LED | 板载 RGB LED DIN，不属于可插针 |
 
 ST7789 版本额外占用：
 
