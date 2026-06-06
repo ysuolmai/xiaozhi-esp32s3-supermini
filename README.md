@@ -24,9 +24,9 @@ MAX98357A    ESP32-S3
 ---------    --------
 VIN    -->   3.3V
 GND    -->   GND
-BCLK   -->   GPIO8
+BCLK   -->   GPIO12
 LRC    -->   GPIO13
-DIN    -->   GPIO7
+DIN    -->   GPIO11
 GAIN   -->   不接(默认9dB) 或 GND(12dB)
 SD     -->   不接(默认启用)
 ```
@@ -44,7 +44,7 @@ SD     -->   GPIO6
 L/R    -->   GND (左声道)
 ```
 
-默认版本不使用屏幕，GPIO9/GPIO10/GPIO11/GPIO12 未被 LCD 占用，可按需改作其它外设。
+默认版本不使用屏幕，GPIO7/GPIO8/GPIO9/GPIO10 未被 LCD 占用，可按需改作其它外设。
 
 ### 可选 ST7789 屏幕
 
@@ -55,8 +55,8 @@ ST7789       ESP32-S3
 ------       --------
 VCC    -->   3.3V
 GND    -->   GND
-SCL    -->   GPIO12
-SDA    -->   GPIO11
+SCL    -->   GPIO7
+SDA    -->   GPIO8
 DC     -->   GPIO9
 CS     -->   GPIO10
 RST    -->   3.3V (或不接)
@@ -189,8 +189,8 @@ idf.py -p /dev/ttyACM0 monitor
 | 4 | WS | INMP441 |
 | 5 | SCK | INMP441 |
 | 6 | SD | INMP441 |
-| 7 | DIN | MAX98357A |
-| 8 | BCLK | MAX98357A |
+| 11 | DIN | MAX98357A |
+| 12 | BCLK | MAX98357A |
 | 13 | LRC | MAX98357A |
 | 48 | LED | 板载 RGB LED DIN，不属于可插针 |
 
@@ -198,10 +198,10 @@ ST7789 版本额外占用：
 
 | GPIO | 功能 | 模块 |
 |------|------|------|
+| 7 | SCLK/SCL | ST7789 |
+| 8 | MOSI/SDA | ST7789 |
 | 9 | DC | ST7789 |
 | 10 | CS | ST7789 |
-| 11 | MOSI/SDA | ST7789 |
-| 12 | SCLK/SCL | ST7789 |
 
 ## 相关链接
 
