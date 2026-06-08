@@ -90,12 +90,15 @@ private:
             }
             app.ToggleChatState();
         });
+        boot_button_.OnLongPress([this]() {
+            EnterWifiConfigMode();
+        });
     }
 
 
 
 public:
-    Esp32S3SuperMiniBoard() : boot_button_(BOOT_BUTTON_GPIO) {
+    Esp32S3SuperMiniBoard() : boot_button_(BOOT_BUTTON_GPIO, false, 5000) {
 #ifdef CONFIG_ESP32S3_SUPERMINI_ST7789_DISPLAY
         InitializeSpi();
         InitializeLcdDisplay();
